@@ -3,32 +3,32 @@ import re
 
 def normalize_text(text):
     """
-    Normalize text by converting to lowercase, removing accents, 
-    and stripping diacritics.
+    Normaliza el texto eliminando acentos y convirtiéndolo a minúsculas.
 
     Args:
-        text (str): The input text to normalize.
+        text (str): El texto a normalizar.
 
     Returns:
-        str: The normalized text.
+        str: El texto normalizado.
     """
-    text = text.lower() # Convert to lowercase
-    text = unicodedata.normalize('NFD', text) # Decompose characters
-    # Remove accents and diacritics
+    text = text.lower() # Convertir a minusculas
+    text = unicodedata.normalize('NFD', text) # Descomponer caracteres acentuados
+    # Remover caracteres de acento y otros modificadores
     text = ''.join([c for c in text if unicodedata.category(c) != 'Mn'])
-    # Return the normalized text    
+    # Retornar el texto normalizado
     return text
+
 
 def matches_any(text, patterns):
     """
-    Check if the normalized text matches any of the provided patterns.
+    Comprueba si el texto coincide con alguno de los patrones proporcionados.
 
     Args:
-        text (str): The input text to check.
-        patterns (list): A list of regex patterns to match against.
+        text (str): El texto de entrada a comprobar.
+        patterns (list): Una lista de patrones de expresión regular.
 
     Returns:
-        bool: True if any pattern matches the normalized text, False otherwise.
+        bool: True si alguno de los patrones coincide con el texto normalizado, False en caso contrario.
     """
     norm = normalize_text(text)
     return any(re.search(p, norm) for p in patterns)
